@@ -3,6 +3,8 @@ from .models import Tache
 from utilisateur.models import CustomUser
 from project.models import Projet
 
+# In serializers.py
+
 class TacheSerializer(serializers.ModelSerializer):
     assigned_to_username = serializers.SerializerMethodField(read_only=True)
     projet_id = serializers.IntegerField(required=True)  
@@ -76,7 +78,7 @@ class TacheSerializer(serializers.ModelSerializer):
             except Projet.DoesNotExist:
                 raise serializers.ValidationError({'projet_id': f'Projet avec ID {projet_id} inexistant'})
             
-           
+            
             return Tache.objects.create(**validated_data)
         except Exception as e:
             print(f"Erreur lors de la création de la tâche: {str(e)}")
